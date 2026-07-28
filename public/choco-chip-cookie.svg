@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Choco Chip Cookie</title>
+  <desc id="desc">A stylized chocolate chip cookie illustration on a dark background.</desc>
+  <rect width="800" height="600" fill="#111827"/>
+  <circle cx="400" cy="300" r="180" fill="#d9a86c"/>
+  <circle cx="400" cy="300" r="160" fill="#d7a05c"/>
+  <circle cx="315" cy="230" r="18" fill="#5b371c"/>
+  <circle cx="455" cy="210" r="16" fill="#5b371c"/>
+  <circle cx="490" cy="310" r="19" fill="#5b371c"/>
+  <circle cx="355" cy="360" r="17" fill="#5b371c"/>
+  <circle cx="265" cy="320" r="15" fill="#5b371c"/>
+  <circle cx="430" cy="390" r="14" fill="#5b371c"/>
+  <circle cx="520" cy="250" r="12" fill="#5b371c"/>
+  <circle cx="370" cy="255" r="13" fill="#5b371c"/>
+  <circle cx="510" cy="360" r="11" fill="#5b371c"/>
+  <circle cx="300" cy="390" r="12" fill="#5b371c"/>
+  <circle cx="245" cy="250" r="10" fill="#5b371c"/>
+  <circle cx="470" cy="165" r="9" fill="#5b371c"/>
+  <circle cx="555" cy="305" r="10" fill="#5b371c"/>
+  <circle cx="330" cy="170" r="9" fill="#5b371c"/>
+  <circle cx="320" cy="300" r="8" fill="#5b371c"/>
+  <circle cx="580" cy="205" r="8" fill="#5b371c"/>
+  <circle cx="230" cy="360" r="9" fill="#5b371c"/>
+  <circle cx="400" cy="145" r="8" fill="#5b371c"/>
+  <text x="400" y="540" fill="#9ca3af" font-family="Arial, sans-serif" font-size="26" text-anchor="middle">Choco Chip Cookie</text>
+</svg>

@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- 🎨 THE PRESTIGE COLOR SYSTEM --- */
+  
+  /* Brand Constants */
+  --color-primary: #6366f1;
+  --color-primary-light: #a5b4fc;
+  --color-primary-dark: #4338ca;
+  --color-gold: #fbbf24;
+
+  /* 🌑 NIGHT MODE VARIABLES (Default) */
+  --color-bg-main: #020617;
+  --color-bg-soft: #0f172a;
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-text-base: #f8fafc;
+  --color-text-muted: #94a3b8;
+
+  /* ☀️ DAY MODE VARIABLES */
+  --light-bg-main: #f8fafc;
+  --light-bg-soft: #ffffff;
+  --light-surface: rgba(0, 0, 0, 0.02);
+  --light-border-subtle: rgba(0, 0, 0, 0.06);
+  --light-text-base: #0f172a;
+  --light-text-muted: #475569;
+
+  /* Typography */
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+
+  /* 🌀 Custom Spring Physics (Fixed for Tailwind v4) */
+  --ease-spring: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg-main text-text-base font-sans antialiased transition-colors duration-700 ease-in-out;
+    background-image: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.15), transparent 80%);
+    min-height: 100vh;
+  }
+
+  /* --- THEME TOGGLE LOGIC --- */
+  .light {
+    color-scheme: light;
+    --color-bg-main: var(--light-bg-main);
+    --color-bg-soft: var(--light-bg-soft);
+    --color-surface: var(--light-surface);
+    --color-border-subtle: var(--light-border-subtle);
+    --color-text-base: var(--light-text-base);
+    --color-text-muted: var(--light-text-muted);
+  }
+
+  .light body {
+    background-image: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.05), transparent 80%);
+  }
+
+  /* Smooth custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-bg-main;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/40 rounded-full hover:bg-primary;
+  }
+}
+
+@layer components {
+  /* 💎 Glassmorphic Card */
+  .glass-card {
+    @apply relative overflow-hidden backdrop-blur-2xl bg-surface border border-border-subtle
+           rounded-[2rem] transition-all duration-500 ease-out;
+  }
+
+  .glass-card:hover {
+    @apply border-primary/30 -translate-y-2 shadow-[0_20px_50px_rgba(0,0,0,0.2)];
+  }
+
+  /* 🔥 Luxury Interaction Button */
+  .btn-luxury {
+    @apply relative px-10 py-4 rounded-full font-bold uppercase tracking-[0.2em] text-[10px]
+           bg-primary text-white overflow-hidden transition-all duration-500
+           hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] hover:scale-105 active:scale-95;
+    transition-timing-function: var(--ease-spring);
+  }
+
+  .btn-luxury::after {
+    content: '';
+    @apply absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent
+           transition-all duration-1000 skew-x-[-25deg];
+  }
+
+  .btn-luxury:hover::after {
+    @apply left-[100%];
+  }
+
+  /* ✨ Aurora Background Glow */
+  .aurora {
+    @apply absolute blur-[120px] rounded-full pointer-events-none opacity-40 mix-blend-screen;
+    background: linear-gradient(45deg, var(--color-primary), #818cf8);
+  }
+
+  /* 🧊 Premium Gradient Text */
+  .text-luxury {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-text-base via-primary-light to-primary;
+    display: inline-block;
+  }
+
+  /* 🕒 Theme-Sensitive Icons */
+  .theme-icon {
+    transition: transform 600ms var(--ease-spring);
+  }
+  
+  .light .theme-icon {
+    @apply rotate-[360deg];
+  }
+}
+
+/* 🌌 Mesh Background Layer */
+.bg-mesh {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-mesh::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(at 20% 20%, rgba(99, 102, 241, 0.1), transparent 50%),
+    radial-gradient(at 80% 80%, rgba(79, 70, 229, 0.08), transparent 50%);
+  pointer-events: none;
+}

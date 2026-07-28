@@ -1,0 +1,53 @@
+{
+  "name": "cafenova",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@left4code/svg-renderer": "^1.0.4",
+    "@lottiefiles/react-lottie-player": "^3.6.0",
+    "@reduxjs/toolkit": "^2.11.2",
+    "@studio-freight/lenis": "^1.0.42",
+    "@tailwindcss/vite": "^4.2.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cva": "^0.0.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.38.0",
+    "gsap": "^3.14.2",
+    "lottie-react": "^2.4.1",
+    "lucide-react": "^1.7.0",
+    "react": "^19.2.4",
+    "react-countup": "^6.5.3",
+    "react-dom": "^19.2.4",
+    "react-hook-form": "^7.72.1",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.6.0",
+    "react-parallax-tilt": "^1.7.322",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.14.0",
+    "sonner": "^2.0.7",
+    "swiper": "^12.1.3",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "vite": "^8.0.4"
+  }
+}
