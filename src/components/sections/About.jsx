@@ -53,7 +53,7 @@ const About = () => {
               <img
                 src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf"
                 alt="Chef at Work"
-                className="w-full h-[650px] object-cover hover:scale-105 transition-transform duration-1000"
+                className="w-full h-[380px] sm:h-[480px] lg:h-[650px] object-cover hover:scale-105 transition-transform duration-1000"
               />
               {/* Glass Overlay Card */}
               <div className="absolute bottom-8 left-8 right-8 glass-indigo p-6 rounded-2xl border border-white/10">
@@ -85,7 +85,7 @@ const About = () => {
               The CafeNova Legacy
             </motion.span>
 
-            <motion.h2 variants={fadeIn("up", 0.2)} className="text-5xl md:text-6xl font-serif text-white mb-8 leading-[1.1]">
+            <motion.h2 variants={fadeIn("up", 0.2)} className="text-4xl sm:text-5xl md:text-6xl font-serif text-white mb-8 leading-[1.1]">
               Redefining the <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-300">Dining Protocol.</span>
             </motion.h2>
@@ -100,7 +100,7 @@ const About = () => {
             </motion.div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-6 border-y border-white/5 py-10 mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-y border-white/5 py-10 mb-12">
               <div>
                 <h4 className="text-white text-3xl font-serif mb-1"><StatCounter end={12} suffix="+" /></h4>
                 <p className="text-slate-500 text-[10px] uppercase tracking-widest font-bold">Years Exp</p>
@@ -123,7 +123,7 @@ const About = () => {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="grid md:grid-cols-4 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           {coreValues.map((value, i) => (
             <motion.div 

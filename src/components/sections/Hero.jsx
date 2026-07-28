@@ -22,7 +22,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-bg-main">
+    <section id="home" className="relative min-h-[100svh] w-full flex items-center justify-center overflow-hidden bg-bg-main">
       
       {/* Dynamic Background Slider */}
       <div className="absolute inset-0 z-0">
@@ -66,7 +66,7 @@ const Hero = () => {
 
           <motion.h1 
             variants={fadeIn("up", 0.4)}
-            className="text-6xl md:text-8xl font-serif text-white mb-6 leading-[1.05]"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-6 leading-[1.08]"
           >
             Taste the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-300 italic">Future</span> <br /> 
             of Fine Dining.
@@ -86,14 +86,14 @@ const Hero = () => {
             className="flex flex-wrap gap-4 justify-center lg:justify-start"
           >
             {/* CTA 1: Must Try */}
-            <Link to="/order" className="group relative px-8 py-4 bg-primary rounded-2xl font-bold text-white overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(99,102,241,0.4)]">
+            <Link to="/order" className="group relative w-full sm:w-auto px-8 py-4 bg-primary rounded-2xl font-bold text-white overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(99,102,241,0.4)]">
               <span className="relative z-10 flex items-center gap-2">
                 <UtensilsCrossed size={18} /> Must Try <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
 
             {/* CTA 2: Contact */}
-            <Link to="/contact" className="group px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl font-bold text-white transition-all hover:bg-white/10 hover:border-primary/50 flex items-center gap-2">
+            <Link to="/contact" className="group w-full sm:w-auto px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl font-bold text-white transition-all hover:bg-white/10 hover:border-primary/50 flex items-center gap-2 justify-center sm:justify-start">
               <MessageSquare size={18} /> Contact Us
             </Link>
 

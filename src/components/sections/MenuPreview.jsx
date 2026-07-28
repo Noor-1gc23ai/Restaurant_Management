@@ -79,7 +79,7 @@ const MenuPreview = () => {
           initial="initial" 
           whileInView="animate" 
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
         >
           <AnimatePresence mode="popLayout">
             {filteredMenu.map((item) => (
@@ -90,9 +90,9 @@ const MenuPreview = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
-                className="h-full"
+                className="flex h-full"
               >
-                <GlassCard className="group relative flex min-h-[520px] flex-col overflow-hidden border-white/5 p-0 transition-all duration-500 hover:border-primary/30">
+                <GlassCard className="group relative flex h-full min-h-[520px] flex-col overflow-hidden border-white/5 p-0 transition-all duration-500 hover:border-primary/30">
                   {/* Top Image Section */}
                   <div className="relative h-3/5 overflow-hidden">
                     <MenuImage
@@ -123,7 +123,7 @@ const MenuPreview = () => {
                   </div>
 
                   {/* Content Section */}
-                  <div className="flex flex-1 flex-col p-8">
+                  <div className="flex h-full flex-1 flex-col p-8">
                     <div className="flex justify-between items-end">
                       <div className="space-y-1">
                         <p className="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">
@@ -142,16 +142,20 @@ const MenuPreview = () => {
                       {item.description}
                     </p>
 
-                    {/* Bottom Detail: Hover Reveal Text */}
-                    <div className="pt-4 flex items-center gap-2 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                      <Leaf size={14} className="text-primary" />
-                      <span className="text-[10px] uppercase tracking-[0.1em] text-slate-500">
-                        Crafted with organic ingredients
-                      </span>
-                    </div>
+                    <div className="mt-auto pt-6 space-y-4">
+                      <div className="flex items-center gap-2 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                        <Leaf size={14} className="text-primary" />
+                        <span className="text-[10px] uppercase tracking-[0.1em] text-slate-500">
+                          Crafted with organic ingredients
+                        </span>
+                      </div>
 
-                    <div className="mt-auto pt-6">
                       <AddToCartButton item={item} />
+
+                      <div className="flex items-center gap-4 border-t border-white/5 pt-4 text-[10px] uppercase tracking-[0.1em] text-slate-500">
+                        <span>Freshly Prepared</span>
+                        <span className="text-primary">Premium Quality</span>
+                      </div>
                     </div>
                   </div>
                 </GlassCard>

@@ -15,8 +15,8 @@ const OrderSuccess = () => {
     return (
       <div className="min-h-screen bg-bg-main pt-32 pb-20">
         <div className="container mx-auto px-6">
-          <GlassCard className="mx-auto max-w-2xl p-10 text-center">
-            <h1 className="mb-4 text-3xl font-serif text-white">Order not found</h1>
+          <GlassCard className="mx-auto max-w-2xl p-8 sm:p-10 text-center">
+            <h1 className="mb-4 text-2xl sm:text-3xl font-serif text-white">Order not found</h1>
             <p className="mb-8 text-slate-500">
               We could not find the order you requested.
             </p>
@@ -47,7 +47,7 @@ const OrderSuccess = () => {
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
             <CheckCircle2 size={40} />
           </div>
-          <h1 className="mb-4 text-5xl font-serif text-white md:text-6xl">Order Placed</h1>
+          <h1 className="mb-4 text-4xl sm:text-5xl md:text-6xl font-serif text-white">Order Placed</h1>
           <p className="mx-auto max-w-2xl text-slate-400">
             Your order has been confirmed. We are preparing everything for delivery.
           </p>

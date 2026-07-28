@@ -11,17 +11,31 @@ import {
   Send,
   Sparkles,
 } from "lucide-react";
-import { Player } from "@lottiefiles/react-lottie-player";
-import Lottie from "lottie-react";
 import bookingAnimation from "../../assets/animations/booking.json";
+import { useEffect, useState } from "react";
 
 const ReservationForm = () => {
+  const [Player, setPlayer] = useState(null);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    let active = true;
+
+    import("@lottiefiles/react-lottie-player").then((module) => {
+      if (active) {
+        setPlayer(() => module.Player);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const lottieData = bookingAnimation?.default || bookingAnimation;
 
@@ -55,11 +69,11 @@ const ReservationForm = () => {
   };
 
   return (
-    <section className="py-28 bg-[#020617] relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-[#020617] relative overflow-hidden">
       <motion.div
         animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-500/20 blur-[120px] rounded-full"
+        className="absolute top-0 left-1/4 w-[320px] h-[320px] sm:w-[500px] sm:h-[500px] bg-indigo-500/20 blur-[120px] rounded-full"
       />
 
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
@@ -74,7 +88,7 @@ const ReservationForm = () => {
               <Sparkles size={14} /> Instant Booking
             </div>
 
-            <h2 className="text-5xl md:text-6xl text-white font-bold leading-tight">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl text-white font-bold leading-tight">
               Book Your <span className="text-indigo-400">Table</span>
             </h2>
 
@@ -82,14 +96,18 @@ const ReservationForm = () => {
               Reserve your table easily and enjoy a premium dining experience.
             </p>
 
-            <div className="w-[250px] h-[250px]">
-              {lottieData && typeof lottieData === "object" && (
+            <div className="w-[200px] h-[200px] sm:w-[250px] sm:h-[250px]">
+              {Player && lottieData && typeof lottieData === "object" ? (
                 <Player
-  autoplay
-  loop
-  src={bookingAnimation}
-  style={{ height: "250px", width: "250px" }}
-/>
+                  autoplay
+                  loop
+                  src={bookingAnimation}
+                  style={{ height: "100%", width: "100%" }}
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center rounded-full border border-white/10 bg-white/5 text-xs uppercase tracking-[0.3em] text-slate-500">
+                  Loading animation
+                </div>
               )}
             </div>
           </motion.div>
@@ -103,7 +121,7 @@ const ReservationForm = () => {
               
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="grid md:grid-cols-2 gap-5"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-5"
               >
                 {[
                   { id: "name", label: "Name", icon: User, type: "text" },
@@ -127,7 +145,7 @@ const ReservationForm = () => {
                         {...register(field.id, {
                           required: `${field.label} is required`,
                         })}
-                        className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/10 text-white outline-none border border-white/10 focus:border-indigo-400"
+                        className="w-full min-h-11 pl-10 pr-4 py-3 rounded-xl bg-white/10 text-white outline-none border border-white/10 focus:border-indigo-400"
                       />
                     </div>
 
@@ -145,7 +163,7 @@ const ReservationForm = () => {
                     <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <select
                       {...register("time")}
-                      className="w-full pl-10 py-3 rounded-xl bg-white/10 text-white border border-white/10"
+                      className="w-full min-h-11 pl-10 py-3 rounded-xl bg-white/10 text-white border border-white/10"
                     >
                       <option>07:00 PM</option>
                       <option>08:00 PM</option>
@@ -160,7 +178,7 @@ const ReservationForm = () => {
                     <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <select
                       {...register("guests")}
-                      className="w-full pl-10 py-3 rounded-xl bg-white/10 text-white border border-white/10"
+                      className="w-full min-h-11 pl-10 py-3 rounded-xl bg-white/10 text-white border border-white/10"
                     >
                       <option>2</option>
                       <option>4</option>
@@ -175,7 +193,7 @@ const ReservationForm = () => {
                   <label className="text-xs text-gray-400">Message</label>
                   <textarea
                     {...register("message")}
-                    className="w-full mt-1 p-4 rounded-xl bg-white/10 text-white border border-white/10"
+                    className="w-full mt-1 min-h-11 p-4 rounded-xl bg-white/10 text-white border border-white/10"
                     placeholder="Special request..."
                   />
                 </div>
@@ -184,7 +202,7 @@ const ReservationForm = () => {
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="md:col-span-2 bg-indigo-500 py-4 rounded-xl font-bold text-white flex justify-center items-center gap-2"
+                  className="sm:col-span-2 bg-indigo-500 min-h-11 py-4 rounded-xl font-bold text-white flex justify-center items-center gap-2"
                 >
                   Confirm Booking <Send size={16} />
                 </motion.button>

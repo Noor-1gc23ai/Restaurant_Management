@@ -83,7 +83,7 @@ const Menu = () => {
           variants={staggerContainer} 
           initial="initial" 
           animate="animate"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
         >
           <AnimatePresence mode="popLayout">
             {filteredMenu.length > 0 ? (
@@ -95,8 +95,9 @@ const Menu = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4 }}
+                  className="flex h-full"
                 >
-                  <GlassCard className="group h-[540px] p-0 overflow-hidden flex flex-col border-white/5 hover:border-primary/20 transition-all duration-500">
+                  <GlassCard className="group h-full min-h-[540px] p-0 overflow-hidden flex flex-col border-white/5 hover:border-primary/20 transition-all duration-500">
                     {/* Image Area */}
                     <div className="relative h-1/2 overflow-hidden">
                       <MenuImage 
@@ -123,7 +124,7 @@ const Menu = () => {
                     </div>
 
                     {/* Content Area */}
-                    <div className="p-8 flex flex-col flex-grow">
+                    <div className="p-8 flex h-full flex-col flex-grow">
                       <div className="flex justify-between items-start mb-4">
                         <div>
                           <p className="text-primary text-[10px] font-bold tracking-widest uppercase mb-1">
@@ -142,17 +143,13 @@ const Menu = () => {
                         {item.description}
                       </p>
 
-                      <div className="mt-auto mb-4">
+                      <div className="mt-auto pt-6 space-y-4">
                         <AddToCartButton item={item} />
-                      </div>
 
-                      {/* Nutritional info tag footer */}
-                      <div className="mt-auto flex items-center gap-4 border-t border-white/5 pt-6">
-                        <div className="flex items-center gap-1 text-slate-500 text-[10px] uppercase font-bold tracking-tighter">
-                          <Info size={12} className="text-primary" /> Freshly Prepared
-                        </div>
-                        <div className="flex items-center gap-1 text-slate-500 text-[10px] uppercase font-bold tracking-tighter">
-                          <Utensils size={12} className="text-primary" /> Premium Quality
+                        {/* Nutritional info tag footer */}
+                        <div className="flex items-center gap-4 border-t border-white/5 pt-4 text-[10px] uppercase font-bold tracking-tighter text-slate-500">
+                          <span className="flex items-center gap-1"><Info size={12} className="text-primary" /> Freshly Prepared</span>
+                          <span className="flex items-center gap-1"><Utensils size={12} className="text-primary" /> Premium Quality</span>
                         </div>
                       </div>
                     </div>

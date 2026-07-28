@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Frame, FutureButton } from "../ui/FutureNavbar";
 import { getRestaurantStatus } from "../../utils/helpers";
 import { useCart } from "../../context/CartContext";
+import ThemeToggle from "./ThemeToggle";
 
 export const MobileMenuContext = createContext({
   showMenu: false,
@@ -36,7 +37,8 @@ const Navbar = () => {
   return (
     <MobileMenuContext.Provider value={{ showMenu, setShowMenu }}>
       <nav className="fixed w-full top-0 inset-x-0 z-50 h-20">
-        <div className="absolute right-4 top-4 z-50 lg:hidden">
+        <div className="absolute right-4 top-4 z-50 flex items-center gap-2 lg:hidden">
+          <ThemeToggle compact />
           <NavLink
             to="/cart"
             className="flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/80 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white backdrop-blur-md shadow-xl"
@@ -67,7 +69,7 @@ const Navbar = () => {
           </div>
 
           {/* Center Frame (Nav Links) */}
-          <div className="flex-none h-full px-12 relative w-full lg:w-auto min-w-[580px]">
+          <div className="flex-none h-full px-12 relative w-full lg:w-auto lg:min-w-[520px] xl:min-w-[580px]">
             <Frame
               enableBackdropBlur
               className="drop-shadow-[0_0_10px_rgba(251,191,36,0.1)]"
@@ -118,6 +120,9 @@ const Navbar = () => {
               ]}
             />
             <div className="flex items-center -mt-4 relative z-20">
+              <div className="mr-3">
+                <ThemeToggle />
+              </div>
               <FutureButton
                 onClick={() => navigate("/cart")}
                 shape="flat"

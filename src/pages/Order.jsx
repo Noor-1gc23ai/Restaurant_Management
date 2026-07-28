@@ -113,11 +113,11 @@ const Order = () => {
             initial="initial"
             animate="animate"
           >
-            <GlassCard className="mx-auto max-w-2xl border-white/5 p-10 text-center">
+            <GlassCard className="mx-auto max-w-2xl border-white/5 p-8 sm:p-10 text-center">
               <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-white/5 bg-white/5 text-slate-700">
                 <ShoppingBag size={40} />
               </div>
-              <h3 className="mb-4 text-2xl font-serif text-white">Your cart is empty</h3>
+              <h3 className="mb-4 text-xl sm:text-2xl font-serif text-white">Your cart is empty</h3>
               <p className="mx-auto mb-8 max-w-md text-slate-500">
                 Add a few dishes from the menu before starting checkout.
               </p>
@@ -143,7 +143,7 @@ const Order = () => {
             className="lg:col-span-2 space-y-6"
           >
             <div className="flex justify-between items-end border-b border-white/5 pb-6">
-              <h2 className="text-4xl font-serif text-white">Order Items</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-white">Order Items</h2>
               <span className="text-slate-500 text-sm font-bold uppercase tracking-widest">
                 {cart.length} Items
               </span>
@@ -165,7 +165,7 @@ const Order = () => {
             animate="animate"
             className="h-fit space-y-8"
           >
-            <GlassCard className="space-y-8 border-primary/10 p-8">
+            <GlassCard className="space-y-8 border-primary/10 p-6 sm:p-8">
               <div className="space-y-4">
                 <h3 className="text-2xl font-serif tracking-wide text-white">Customer Details</h3>
                 <div className="w-12 h-1 bg-primary rounded-full" />

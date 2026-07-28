@@ -31,11 +31,11 @@ const Cart = () => {
 
         {isEmpty ? (
           <motion.div variants={fadeIn("up", 0.2)} initial="initial" animate="animate">
-            <GlassCard className="mx-auto max-w-2xl border-white/5 p-10 text-center">
+            <GlassCard className="mx-auto max-w-2xl border-white/5 p-8 sm:p-10 text-center">
               <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-white/5 bg-white/5 text-slate-700">
                 <ShoppingBag size={40} />
               </div>
-              <h2 className="mb-4 text-2xl font-serif text-white">Your cart is empty</h2>
+              <h2 className="mb-4 text-xl sm:text-2xl font-serif text-white">Your cart is empty</h2>
               <p className="mx-auto mb-8 max-w-md text-slate-500">
                 Add a few dishes from the menu to start building your order.
               </p>
@@ -59,7 +59,7 @@ const Cart = () => {
               className="space-y-4 lg:col-span-2"
             >
               <div className="mb-2 flex items-end justify-between border-b border-white/5 pb-4">
-                <h2 className="text-3xl font-serif text-white md:text-4xl">Cart Items</h2>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-white">Cart Items</h2>
                 <span className="text-xs font-bold uppercase tracking-widest text-slate-500">
                   {cartCount} Items
                 </span>
@@ -87,7 +87,7 @@ const Cart = () => {
               animate="animate"
               className="h-fit"
             >
-              <GlassCard className="space-y-8 border-primary/10 p-8">
+              <GlassCard className="space-y-8 border-primary/10 p-6 sm:p-8">
                 <div className="space-y-4">
                   <h3 className="text-2xl font-serif tracking-wide text-white">Order Summary</h3>
                   <div className="h-1 w-12 rounded-full bg-primary" />
