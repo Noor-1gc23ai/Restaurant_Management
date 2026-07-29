@@ -121,7 +121,7 @@ const Footer = () => {
           <div className="space-y-8">
             <div className="space-y-5">
               <h2 className="font-serif text-3xl text-text-base">
-                CAFE<span className="italic text-gold-primary">NOVA</span>
+                THE<span className="italic text-gold-primary">NOVA TABLE</span>
               </h2>
               <p className="leading-relaxed text-text-muted">
                 A neighbourhood kitchen in Sector 62, built around seasonal

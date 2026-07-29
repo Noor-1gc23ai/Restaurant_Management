@@ -110,7 +110,7 @@ const Navbar = () => {
             className="font-serif text-xl font-black tracking-tight text-text-base"
             onClick={() => setShowMenu(false)}
           >
-            CAFE<span className="italic text-gold-primary">NOVA</span>
+            THENOVA<span className="italic text-gold-primary">TABLE</span>
           </NavLink>
 
           {/* Desktop nav links */}

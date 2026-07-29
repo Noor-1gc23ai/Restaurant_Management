@@ -4,7 +4,7 @@ export const getRestaurantStatus = () => {
   const hour = now.getHours();
   const day = now.getDay(); // 0 = Sunday
 
-  // Assuming CafeNova is open 10:00 AM to 11:00 PM
+  // Assuming THE Nova Table is open 10:00 AM to 11:00 PM
   const isOpen = hour >= 10 && hour < 23;
   
   if (day === 1) return { status: "Closed", color: "text-red-500", message: "Closed for Maintenance (Monday)" };
