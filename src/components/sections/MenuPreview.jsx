@@ -1,167 +1,119 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { menuData } from "../../data/menuData";
 import AddToCartButton from "../AddToCartButton";
 import { fadeIn, staggerContainer } from "../../utils/animations";
 import GlassCard from "../ui/GlassCard";
 import MenuImage from "../ui/MenuImage";
 import { formatPrice } from "../../utils/helpers";
-import { Flame, Leaf, Star, Sparkles } from "lucide-react";
+import { Flame, Star, ArrowRight } from "lucide-react";
 
-const categories = ["All", "Breakfast", "Starters", "Dinner", "Fast Food", "Sweets", "Drinks"];
+// A curated slice, not the full catalogue — the homepage is a preview,
+// the full filterable menu already lives at /menu.
+const CURATED_ITEMS = menuData.slice(0, 6);
 
 const MenuPreview = () => {
-  const [activeTab, setActiveTab] = useState("All");
-
-  const filteredMenu = activeTab === "All" 
-    ? menuData 
-    : menuData.filter(item => item.category === activeTab);
-
   return (
-    <section id="menu" className="py-32 bg-bg-main relative overflow-hidden">
-      {/* Background Decorative Element */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+    <section id="menu" className="relative overflow-hidden bg-bg-main py-28 md:py-36">
+      <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-gold-primary/5 blur-[120px]" />
 
       <div className="container mx-auto px-6">
-        
-        {/* Header Section */}
-        <motion.div 
+        <motion.div
           variants={fadeIn("up", 0.1)}
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="mb-16 text-center"
         >
-          <div className="flex justify-center items-center gap-2 mb-4">
-            <Sparkles className="text-primary" size={16} />
-            <span className="text-primary uppercase tracking-[0.5em] text-xs font-bold block">
-              Premium Selection
-            </span>
-            <Sparkles className="text-primary" size={16} />
-          </div>
-          <h2 className="text-5xl md:text-6xl font-serif text-white mb-8">
-            The <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-300">Culinary</span> Gallery
+          <span className="mb-4 block text-xs font-bold uppercase tracking-[0.4em] text-gold-primary">
+            Chef's Selection
+          </span>
+          <h2 className="mb-6 font-serif text-4xl text-text-base sm:text-5xl md:text-6xl">
+            A Taste of the <span className="italic text-gold-primary">Menu</span>
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Every dish is a prototype of perfection. Explore our meticulously curated menu 
-            designed for those who appreciate the finer details of gastronomy.
+          <p className="mx-auto max-w-xl leading-relaxed text-text-muted">
+            A handful of dishes our guests keep coming back for. The full menu
+            has a great deal more to explore.
           </p>
         </motion.div>
 
-        {/* Animated Filter Bar */}
-        <nav className="flex flex-wrap justify-center gap-3 md:gap-6 mb-20">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveTab(cat)}
-              className="relative px-8 py-3 group overflow-hidden"
-            >
-              <span className={`relative z-10 text-sm font-bold tracking-widest uppercase transition-colors duration-300 ${
-                activeTab === cat ? "text-white" : "text-slate-500 group-hover:text-white"
-              }`}>
-                {cat}
-              </span>
-              {activeTab === cat && (
-                <motion.div 
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-primary rounded-full -z-0"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-            </button>
-          ))}
-        </nav>
-
-        {/* Gallery Grid */}
-        <motion.div 
-          layout
-          variants={staggerContainer} 
-          initial="initial" 
-          whileInView="animate" 
+        <motion.div
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
+          className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
-          <AnimatePresence mode="popLayout">
-            {filteredMenu.map((item) => (
-              <motion.div
-                layout
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5 }}
-                className="flex h-full"
-              >
-                <GlassCard className="group relative flex h-full min-h-[520px] flex-col overflow-hidden border-white/5 p-0 transition-all duration-500 hover:border-primary/30">
-                  {/* Top Image Section */}
-                  <div className="relative h-3/5 overflow-hidden">
-                    <MenuImage
-                      src={item.image}
-                      alt={item.name}
-                      className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                    />
-                    {/* Floating Info Overlays */}
-                    <div className="absolute top-4 left-4 flex gap-2">
-                      {item.tags.includes("Best Seller") && (
-                        <div className="bg-primary/90 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                          <Star size={10} fill="white" /> ELITE
-                        </div>
-                      )}
-                      {item.tags.includes("Spicy") && (
-                        <div className="bg-orange-500/90 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                          <Flame size={10} fill="white" /> HOT
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Calorie Badge */}
-                    <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full">
-                      <p className="text-primary text-[10px] font-bold tracking-tighter uppercase">
-                        {item.calories}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="flex h-full flex-1 flex-col p-8">
-                    <div className="flex justify-between items-end">
-                      <div className="space-y-1">
-                        <p className="text-primary text-[10px] font-bold tracking-[0.2em] uppercase">
-                          {item.category}
-                        </p>
-                        <h3 className="text-2xl text-white font-serif tracking-wide">{item.name}</h3>
-                      </div>
-                      <span className="text-2xl text-white/90 font-serif italic">
-                        {formatPrice(item.price)}
+          {CURATED_ITEMS.map((item) => (
+            <motion.div key={item.id} variants={fadeIn("up", 0.05)} className="flex h-full">
+              <GlassCard className="group relative flex h-full min-h-[500px] flex-col overflow-hidden border-border-subtle p-0 transition-all duration-500 hover:border-gold-primary/30">
+                <div className="relative h-3/5 overflow-hidden">
+                  <MenuImage
+                    src={item.image}
+                    alt={item.name}
+                    className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute left-4 top-4 flex gap-2">
+                    {item.tags.includes("Best Seller") && (
+                      <span className="flex items-center gap-1 rounded-full bg-gold-primary/90 px-3 py-1 text-[10px] font-bold text-black backdrop-blur-md">
+                        <Star size={10} fill="black" /> SIGNATURE
                       </span>
-                    </div>
-
-                    <div className="w-12 h-[1px] bg-primary/40 group-hover:w-full transition-all duration-700" />
-
-                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 transition-colors group-hover:text-slate-200">
-                      {item.description}
-                    </p>
-
-                    <div className="mt-auto pt-6 space-y-4">
-                      <div className="flex items-center gap-2 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                        <Leaf size={14} className="text-primary" />
-                        <span className="text-[10px] uppercase tracking-[0.1em] text-slate-500">
-                          Crafted with organic ingredients
-                        </span>
-                      </div>
-
-                      <AddToCartButton item={item} />
-
-                      <div className="flex items-center gap-4 border-t border-white/5 pt-4 text-[10px] uppercase tracking-[0.1em] text-slate-500">
-                        <span>Freshly Prepared</span>
-                        <span className="text-primary">Premium Quality</span>
-                      </div>
-                    </div>
+                    )}
+                    {item.tags.includes("Spicy") && (
+                      <span className="flex items-center gap-1 rounded-full bg-orange-500/90 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md">
+                        <Flame size={10} fill="white" /> SPICY
+                      </span>
+                    )}
                   </div>
-                </GlassCard>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                  <div className="absolute bottom-4 right-4 rounded-full border border-border-subtle bg-black/60 px-3 py-1 backdrop-blur-md">
+                    <p className="text-[10px] font-bold uppercase tracking-tight text-gold-primary">
+                      {item.calories}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex h-full flex-1 flex-col p-7">
+                  <div className="mb-3 flex items-start justify-between gap-3">
+                    <div>
+                      <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-gold-primary">
+                        {item.category}
+                      </p>
+                      <h3 className="font-serif text-xl text-text-base">{item.name}</h3>
+                    </div>
+                    <span className="whitespace-nowrap font-serif text-xl italic text-text-base">
+                      {formatPrice(item.price)}
+                    </span>
+                  </div>
+
+                  <div className="mb-4 h-px w-10 bg-gold-primary/40 transition-all duration-700 group-hover:w-full" />
+
+                  <p className="mb-6 line-clamp-3 text-sm leading-relaxed text-text-muted">
+                    {item.description}
+                  </p>
+
+                  <div className="mt-auto">
+                    <AddToCartButton item={item} />
+                  </div>
+                </div>
+              </GlassCard>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          variants={fadeIn("up", 0.2)}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <Link
+            to="/menu"
+            className="inline-flex items-center gap-2 rounded-full border border-gold-primary/30 px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] text-gold-primary transition-all hover:bg-gold-primary hover:text-black"
+          >
+            View Full Menu
+            <ArrowRight size={15} />
+          </Link>
         </motion.div>
       </div>
     </section>

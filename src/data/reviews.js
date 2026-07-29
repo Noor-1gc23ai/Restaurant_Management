@@ -6,7 +6,7 @@ export const reviews = [
     rating: 5,
     verified: true,
     social: "@thecritics_table",
-    comment: "CafeNova offers an unparalleled ambiance. The Truffle Risotto is a masterclass in flavor balance. Truly a gem in the heart of Sector 62.",
+    comment: "The Nova Table offers an unparalleled ambiance. The Truffle Risotto is a masterclass in flavor balance. Truly a gem in the heart of Sector 62.",
     avatar: "https://i.pravatar.cc/150?u=aarav",
     category: "Fine Dining",
     date: "2 days ago"
@@ -17,8 +17,8 @@ export const reviews = [
     role: "Lifestyle Blogger",
     rating: 5,
     verified: true,
-    social: "@noida_vlogger",
-    comment: "The best aesthetic spot in Noida! The lighting, the music, and the molten lava cake are to die for. Perfect for my Instagram feed! ✨",
+    social: "@Bengaluru_vlogger",
+    comment: "The best aesthetic spot in Bengaluru! The lighting, the music, and the molten lava cake are to die for. Perfect for my Instagram feed! ✨",
     avatar: "https://i.pravatar.cc/150?u=priya",
     category: "Aesthetics",
     date: "1 week ago"

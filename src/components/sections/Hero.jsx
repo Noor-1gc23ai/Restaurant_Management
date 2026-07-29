@@ -1,19 +1,23 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Assuming you use react-router
+import { Link } from "react-router-dom";
 import { fadeIn, staggerContainer } from "../../utils/animations";
-import { ArrowRight, MessageSquare, UtensilsCrossed, ChevronRight } from "lucide-react";
+import { ArrowRight, Star, Award, ChevronDown } from "lucide-react";
 
 const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b", // Cocktail/Atmosphere
-  "https://images.unsplash.com/photo-1559339352-11d035aa65de", // Fine Dining Dish
-  "https://images.unsplash.com/photo-1414235077428-338989a2e8c0", // Restaurant Interior
+  "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b",
+  "https://images.unsplash.com/photo-1559339352-11d035aa65de",
+  "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
+];
+
+const TRUST_SIGNALS = [
+  { icon: Star, label: "4.9 / 5", sub: "Google Rating" },
+  { icon: Award, label: "Michelin Inspired", sub: "Seasonal Tasting Menu" },
 ];
 
 const Hero = () => {
   const [currentImg, setCurrentImg] = useState(0);
 
-  // Automatic Background Switcher
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImg((prev) => (prev + 1) % HERO_IMAGES.length);
@@ -22,130 +26,138 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-[100svh] w-full flex items-center justify-center overflow-hidden bg-bg-main">
-      
-      {/* Dynamic Background Slider */}
+    <section
+      id="home"
+      className="relative flex min-h-[100svh] w-full items-center overflow-hidden bg-bg-main"
+    >
+      {/* Background slider */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentImg}
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.08 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 2, ease: "easeOut" }}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 h-full w-full"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-bg-main/80 via-bg-main/40 to-bg-main z-10" />
-            <img 
-              src={HERO_IMAGES[currentImg]} 
-              className="w-full h-full object-cover"
-              alt="CafeNova Ambiance"
+            <div className="absolute inset-0 z-10 bg-gradient-to-b from-bg-main/85 via-bg-main/55 to-bg-main" />
+            <img
+              src={HERO_IMAGES[currentImg]}
+              className="h-full w-full object-cover"
+              alt="The Nova Table ambiance"
             />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-20 container mx-auto px-6 text-center lg:text-left grid lg:grid-cols-2 gap-12 items-center">
-        
+      {/* Content */}
+      <div className="container relative z-20 mx-auto grid items-center gap-16 px-6 pt-24 lg:grid-cols-[1.15fr_0.85fr] lg:pt-0">
         <motion.div
           variants={staggerContainer}
           initial="initial"
           animate="animate"
+          className="text-center lg:text-left"
         >
-          <motion.div 
-            variants={fadeIn("down", 0.2)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-widest mb-8 mx-auto lg:mx-0"
+          <motion.div
+            variants={fadeIn("down", 0.15)}
+            className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-gold-primary/25 bg-gold-primary/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.25em] text-gold-primary lg:mx-0"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-            NOW OPEN IN SECTOR 62, NOIDA
+            Now Open · Sector 62, Bengaluru
           </motion.div>
 
-          <motion.h1 
-            variants={fadeIn("up", 0.4)}
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-6 leading-[1.08]"
+          <motion.h1
+            variants={fadeIn("up", 0.3)}
+            className="mb-6 font-serif text-4xl leading-[1.1] text-text-base sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            Taste the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-300 italic">Future</span> <br /> 
-            of Fine Dining.
+            An Evening Worth
+            <br />
+            <span className="italic text-gold-primary">Remembering</span>
           </motion.h1>
 
-          <motion.p 
-            variants={fadeIn("up", 0.6)}
-            className="text-lg text-slate-400 max-w-xl mb-12 mx-auto lg:mx-0 leading-relaxed"
+          <motion.p
+            variants={fadeIn("up", 0.45)}
+            className="mx-auto mb-10 max-w-lg text-lg leading-relaxed text-text-muted lg:mx-0"
           >
-            Experience a symphony of molecular gastronomy and traditional flavors. 
-            Designed for the modern palate, crafted for the soul.
+            Seasonal ingredients, unhurried service, and a room designed for
+            the moments worth slowing down for.
           </motion.p>
 
-          {/* Button Grid - 4 Buttons Total */}
-          <motion.div 
-            variants={fadeIn("up", 0.8)}
-            className="flex flex-wrap gap-4 justify-center lg:justify-start"
+          <motion.div
+            variants={fadeIn("up", 0.6)}
+            className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start"
           >
-            {/* CTA 1: Must Try */}
-            <Link to="/order" className="group relative w-full sm:w-auto px-8 py-4 bg-primary rounded-2xl font-bold text-white overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(99,102,241,0.4)]">
-              <span className="relative z-10 flex items-center gap-2">
-                <UtensilsCrossed size={18} /> Must Try <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </span>
+            <Link
+              to="/reservation"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold-primary px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-black transition-transform hover:scale-[1.03] active:scale-95 sm:w-auto"
+            >
+              Reserve a Table
+              <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
             </Link>
 
-            {/* CTA 2: Contact */}
-            <Link to="/contact" className="group w-full sm:w-auto px-8 py-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl font-bold text-white transition-all hover:bg-white/10 hover:border-primary/50 flex items-center gap-2 justify-center sm:justify-start">
-              <MessageSquare size={18} /> Contact Us
+            <Link
+              to="/menu"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-border-subtle bg-surface px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-text-base transition-colors hover:border-gold-primary/40 hover:text-gold-primary sm:w-auto"
+            >
+              View Menu
             </Link>
+          </motion.div>
 
-            {/* Secondary Rows */}
-            <div className="w-full flex gap-6 justify-center lg:justify-start mt-4 pt-6 border-t border-white/5">
-              <div className="flex flex-col items-center lg:items-start">
-                <span className="text-white font-serif text-xl font-bold italic">4.9/5</span>
-                <span className="text-[10px] text-slate-500 uppercase tracking-widest">Google Rating</span>
+          {/* Trust signals — visually secondary, separated from CTAs */}
+          <motion.div
+            variants={fadeIn("up", 0.75)}
+            className="mx-auto mt-12 flex max-w-md items-center justify-center gap-8 border-t border-border-subtle pt-8 lg:mx-0 lg:justify-start"
+          >
+            {TRUST_SIGNALS.map(({ icon: Icon, label, sub }) => (
+              <div key={label} className="flex items-center gap-2.5 text-left">
+                <Icon size={16} className="text-gold-primary" />
+                <div>
+                  <p className="font-serif text-sm italic leading-none text-text-base">
+                    {label}
+                  </p>
+                  <p className="mt-1 text-[10px] uppercase tracking-widest text-text-muted">
+                    {sub}
+                  </p>
+                </div>
               </div>
-              <div className="w-[1px] h-10 bg-white/10" />
-              <div className="flex flex-col items-center lg:items-start">
-                <span className="text-white font-serif text-xl font-bold italic">Michelin</span>
-                <span className="text-[10px] text-slate-500 uppercase tracking-widest">Inspired Menu</span>
-              </div>
-            </div>
+            ))}
           </motion.div>
         </motion.div>
 
-        {/* Hero Decorative Side Card */}
+        {/* Decorative side card — desktop only */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="hidden lg:block relative"
+          className="hidden lg:block"
         >
-          <div className="glass-indigo p-8 rounded-[2.5rem] border border-white/10 relative z-20">
-            <h3 className="text-white font-serif text-2xl mb-4 italic">Chef's Special</h3>
-            <img 
-              src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" 
-              className="w-full h-64 object-cover rounded-2xl mb-6 grayscale hover:grayscale-0 transition-all duration-700"
-              alt="Salmon Special"
+          <div className="glass-indigo rounded-[2rem] border border-border-subtle p-7">
+            <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-gold-primary">
+              Chef's Special
+            </p>
+            <img
+              src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c"
+              className="mb-6 h-60 w-full rounded-2xl object-cover grayscale transition-all duration-700 hover:grayscale-0"
+              alt="Wild glazed salmon, chef's special"
             />
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div>
-                <p className="text-white font-bold">Wild Glazed Salmon</p>
-                <p className="text-primary text-sm">Served with Truffle Mash</p>
+                <p className="font-serif text-lg text-text-base">Wild Glazed Salmon</p>
+                <p className="text-sm text-text-muted">Served with truffle mash</p>
               </div>
-              <span className="text-white font-serif text-2xl">₹420</span>
+              <span className="font-serif text-xl italic text-gold-primary">₹420</span>
             </div>
           </div>
-          {/* Circular Text Animation could go here */}
         </motion.div>
       </div>
 
-      {/* Elegant Scroll Indicator */}
-      <motion.div 
-        animate={{ y: [0, 12, 0] }} 
+      {/* Scroll indicator */}
+      <motion.div
+        animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
       >
-        <span className="text-[10px] text-white/20 uppercase tracking-[0.4em]">Scroll</span>
-        <div className="w-[1px] h-16 bg-gradient-to-b from-primary to-transparent" />
+        <ChevronDown size={20} className="text-text-muted/50" />
       </motion.div>
     </section>
   );

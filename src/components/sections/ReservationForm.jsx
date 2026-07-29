@@ -14,6 +14,16 @@ import {
 import bookingAnimation from "../../assets/animations/booking.json";
 import { useEffect, useState } from "react";
 
+const FIELDS = [
+  { id: "name", label: "Name", icon: User, type: "text" },
+  { id: "email", label: "Email", icon: Mail, type: "email" },
+  { id: "phone", label: "Phone", icon: Phone, type: "tel" },
+  { id: "date", label: "Date", icon: Calendar, type: "date" },
+];
+
+const inputClass =
+  "w-full min-h-11 rounded-xl border border-border-subtle bg-bg-main/40 py-3 pl-10 pr-4 text-text-base outline-none transition-colors focus:border-gold-primary/50";
+
 const ReservationForm = () => {
   const [Player, setPlayer] = useState(null);
   const {
@@ -27,9 +37,7 @@ const ReservationForm = () => {
     let active = true;
 
     import("@lottiefiles/react-lottie-player").then((module) => {
-      if (active) {
-        setPlayer(() => module.Player);
-      }
+      if (active) setPlayer(() => module.Player);
     });
 
     return () => {
@@ -42,22 +50,15 @@ const ReservationForm = () => {
   const onSubmit = (data) => {
     const phoneNumber = "919620996689";
 
-    const message = `*New Table Reservation* 🍽️%0A%0A
-*Name:* ${data.name}%0A
-*Email:* ${data.email}%0A
-*Phone:* ${data.phone}%0A
-*Date:* ${data.date}%0A
-*Time:* ${data.time}%0A
-*Guests:* ${data.guests}%0A
-*Note:* ${data.message || "None"}`;
+    const message = `*New Table Reservation*%0A%0A*Name:* ${data.name}%0A*Email:* ${data.email}%0A*Phone:* ${data.phone}%0A*Date:* ${data.date}%0A*Time:* ${data.time}%0A*Guests:* ${data.guests}%0A*Note:* ${data.message || "None"}`;
 
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
 
-    toast.success("Opening WhatsApp...", {
+    toast.success("Opening WhatsApp to confirm your table...", {
       style: {
-        background: "#020617",
-        color: "#6366f1",
-        border: "1px solid rgba(99,102,241,0.3)",
+        background: "#0f172a",
+        color: "#d4af37",
+        border: "1px solid rgba(212,175,55,0.3)",
         borderRadius: "12px",
       },
     });
@@ -69,102 +70,79 @@ const ReservationForm = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-[#020617] relative overflow-hidden">
+    <section className="relative overflow-hidden bg-bg-dark py-24 md:py-32">
       <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
         transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-0 left-1/4 w-[320px] h-[320px] sm:w-[500px] sm:h-[500px] bg-indigo-500/20 blur-[120px] rounded-full"
+        className="absolute left-1/4 top-0 h-[320px] w-[320px] rounded-full bg-gold-primary/15 blur-[120px] sm:h-[500px] sm:w-[500px]"
       />
 
-      <div className="container mx-auto px-6 max-w-6xl relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          
+      <div className="container relative z-10 mx-auto max-w-6xl px-6">
+        <div className="flex flex-col items-center gap-16 lg:flex-row">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="lg:w-2/5 space-y-6"
+            viewport={{ once: true }}
+            className="space-y-6 text-center lg:w-2/5 lg:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-bold uppercase">
-              <Sparkles size={14} /> Instant Booking
+            <div className="inline-flex items-center gap-2 rounded-full bg-gold-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-gold-primary">
+              <Sparkles size={14} /> Instant Confirmation
             </div>
 
-            <h2 className="text-4xl sm:text-5xl md:text-6xl text-white font-bold leading-tight">
-              Book Your <span className="text-indigo-400">Table</span>
+            <h2 className="font-serif text-4xl leading-tight text-text-base sm:text-5xl md:text-6xl">
+              Book Your <span className="italic text-gold-primary">Table</span>
             </h2>
 
-            <p className="text-slate-400">
-              Reserve your table easily and enjoy a premium dining experience.
+            <p className="text-text-muted">
+              A table, held for you — confirmed over WhatsApp in minutes.
             </p>
 
-            <div className="w-[200px] h-[200px] sm:w-[250px] sm:h-[250px]">
+            <div className="mx-auto h-[200px] w-[200px] sm:h-[250px] sm:w-[250px] lg:mx-0">
               {Player && lottieData && typeof lottieData === "object" ? (
-                <Player
-                  autoplay
-                  loop
-                  src={bookingAnimation}
-                  style={{ height: "100%", width: "100%" }}
-                />
+                <Player autoplay loop src={bookingAnimation} style={{ height: "100%", width: "100%" }} />
               ) : (
-                <div className="flex h-full w-full items-center justify-center rounded-full border border-white/10 bg-white/5 text-xs uppercase tracking-[0.3em] text-slate-500">
-                  Loading animation
+                <div className="flex h-full w-full items-center justify-center rounded-full border border-border-subtle bg-surface text-xs uppercase tracking-[0.3em] text-text-muted">
+                  Loading
                 </div>
               )}
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className="lg:w-3/5 w-full"
+            viewport={{ once: true }}
+            className="w-full lg:w-3/5"
           >
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-xl">
-              
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-5"
-              >
-                {[
-                  { id: "name", label: "Name", icon: User, type: "text" },
-                  { id: "email", label: "Email", icon: Mail, type: "email" },
-                  { id: "phone", label: "Phone", icon: Phone, type: "tel" },
-                  { id: "date", label: "Date", icon: Calendar, type: "date" },
-                ].map((field) => (
+            <div className="rounded-3xl border border-border-subtle bg-surface p-8 shadow-xl backdrop-blur-xl">
+              <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {FIELDS.map((field) => (
                   <div key={field.id}>
-                    <label className="text-xs text-gray-400">
+                    <label className="text-xs font-bold uppercase tracking-widest text-text-muted">
                       {field.label}
                     </label>
-
-                    <div className="relative mt-1">
+                    <div className="relative mt-1.5">
                       <field.icon
-                        size={18}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+                        size={17}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
                       />
-
                       <input
                         type={field.type}
-                        {...register(field.id, {
-                          required: `${field.label} is required`,
-                        })}
-                        className="w-full min-h-11 pl-10 pr-4 py-3 rounded-xl bg-white/10 text-white outline-none border border-white/10 focus:border-indigo-400"
+                        {...register(field.id, { required: `${field.label} is required` })}
+                        className={inputClass}
                       />
                     </div>
-
                     {errors[field.id] && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors[field.id].message}
-                      </p>
+                      <p className="mt-1 text-xs text-red-500">{errors[field.id].message}</p>
                     )}
                   </div>
                 ))}
 
                 <div>
-                  <label className="text-xs text-gray-400">Time</label>
-                  <div className="relative mt-1">
-                    <Clock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-                    <select
-                      {...register("time")}
-                      className="w-full min-h-11 pl-10 py-3 rounded-xl bg-white/10 text-white border border-white/10"
-                    >
+                  <label className="text-xs font-bold uppercase tracking-widest text-text-muted">Time</label>
+                  <div className="relative mt-1.5">
+                    <Clock size={17} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+                    <select {...register("time")} className={inputClass}>
                       <option>07:00 PM</option>
                       <option>08:00 PM</option>
                       <option>09:00 PM</option>
@@ -173,13 +151,10 @@ const ReservationForm = () => {
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-400">Guests</label>
-                  <div className="relative mt-1">
-                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-                    <select
-                      {...register("guests")}
-                      className="w-full min-h-11 pl-10 py-3 rounded-xl bg-white/10 text-white border border-white/10"
-                    >
+                  <label className="text-xs font-bold uppercase tracking-widest text-text-muted">Guests</label>
+                  <div className="relative mt-1.5">
+                    <Users size={17} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+                    <select {...register("guests")} className={inputClass}>
                       <option>2</option>
                       <option>4</option>
                       <option>6</option>
@@ -188,21 +163,22 @@ const ReservationForm = () => {
                   </div>
                 </div>
 
-                {/* MESSAGE */}
-                <div className="md:col-span-2">
-                  <label className="text-xs text-gray-400">Message</label>
+                <div className="sm:col-span-2">
+                  <label className="text-xs font-bold uppercase tracking-widest text-text-muted">
+                    Message (optional)
+                  </label>
                   <textarea
                     {...register("message")}
-                    className="w-full mt-1 min-h-11 p-4 rounded-xl bg-white/10 text-white border border-white/10"
-                    placeholder="Special request..."
+                    className={`${inputClass} mt-1.5 min-h-24 pl-4`}
+                    placeholder="Special request, allergy, or occasion..."
                   />
                 </div>
 
-                {/* BUTTON */}
                 <motion.button
-                  whileHover={{ scale: 1.03 }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  className="sm:col-span-2 bg-indigo-500 min-h-11 py-4 rounded-xl font-bold text-white flex justify-center items-center gap-2"
+                  type="submit"
+                  className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-gold-primary py-4 font-bold uppercase tracking-widest text-black transition-colors hover:bg-gold-hover sm:col-span-2"
                 >
                   Confirm Booking <Send size={16} />
                 </motion.button>

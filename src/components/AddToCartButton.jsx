@@ -1,6 +1,5 @@
-"use client";
-
 import { toast } from "sonner";
+import { ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 export default function AddToCartButton({ item, className = "" }) {
@@ -22,10 +21,10 @@ export default function AddToCartButton({ item, className = "" }) {
       onClick={handleAddToCart}
       className={
         className ||
-        "relative z-10 w-full flex items-center justify-center gap-2 bg-primary text-white px-4 py-2.5 rounded-lg font-semibold hover:bg-primary-dark transition-colors"
+        "relative z-10 flex w-full items-center justify-center gap-2 rounded-lg bg-gold-primary px-4 py-2.5 font-semibold text-black transition-colors hover:bg-gold-hover"
       }
     >
-      <i className="fas fa-cart-plus"></i>
+      <ShoppingCart size={16} />
       Add to Cart
     </button>
   );

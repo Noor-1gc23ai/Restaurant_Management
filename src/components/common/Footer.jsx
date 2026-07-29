@@ -1,228 +1,30 @@
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
-import { 
-  MapPin, Phone, Send, ArrowUp, Mail, Globe, 
-  ShieldCheck, Clock, ExternalLink, Sparkles 
+import { useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import {
+  MapPin, Send, ArrowUp, Globe,
+  Clock, ExternalLink, Sparkles
 } from "lucide-react";
 import { FaInstagram, FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { cn } from "../../utils/utils"; // Assuming you have a cn utility
+import { toast } from "react-hot-toast";
+import { cn } from "../../utils/utils";
+import { getRestaurantStatus } from "../../utils/helpers";
 
-const Footer = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+const NAV_LINKS = [
+  { name: "Home", path: "/" },
+  { name: "Menu", path: "/menu" },
+  { name: "Reservation", path: "/reservation" },
+  { name: "Order", path: "/order" },
+  { name: "Contact", path: "/contact" },
+];
 
-  // Real-time clock update for the "Status Indicator"
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+const SOCIAL_LINKS = [
+  { Icon: FaInstagram, href: "#", label: "Instagram" },
+  { Icon: FaFacebook, href: "#", label: "Facebook" },
+  { Icon: FaTwitter, href: "#", label: "Twitter" },
+  { Icon: FaLinkedin, href: "#", label: "LinkedIn" },
+];
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Menu", path: "/menu" },
-    { name: "Reservation", path: "/reservation" },
-    { name: "Order", path: "/order" },
-    { name: "Contact", path: "/contact" }
-  ];
-
-  const socialLinks = [
-    { Icon: FaInstagram, href: "#", color: "hover:text-pink-500", label: "Instagram" },
-    { Icon: FaFacebook, href: "#", color: "hover:text-blue-600", label: "Facebook" },
-    { Icon: FaTwitter, href: "#", color: "hover:text-sky-400", label: "Twitter" },
-    { Icon: FaLinkedin, href: "#", color: "hover:text-blue-700", label: "LinkedIn" },
-  ];
-
-  return (
-    <footer className="relative bg-[#020617] pt-32 pb-8 overflow-hidden border-t border-white/5">
-      {/* --- Advanced Background FX --- */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-indigo-500/5 blur-[100px] rounded-full" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        
-        {/* 1. Holographic Newsletter Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative mb-24 group"
-        >
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-indigo-500/30 rounded-[3rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000" />
-          <div className="relative bg-slate-950/80 backdrop-blur-3xl rounded-[2.8rem] border border-white/10 p-8 md:p-16 overflow-hidden">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-              <div className="max-w-xl text-center lg:text-left space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
-                  <Sparkles size={12} /> The Inner Circle
-                </div>
-                <h3 className="text-4xl md:text-6xl font-serif text-white">
-                  Experience the <span className="italic text-primary-light">Extraordinary</span>
-                </h3>
-                <p className="text-slate-400 text-lg">
-                  Subscribe to receive secret tasting menus and private gallery invites.
-                </p>
-              </div>
-
-              <form className="relative w-full max-w-lg group/input" onSubmit={(e) => e.preventDefault()}>
-                <input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-8 py-6 text-white outline-none focus:ring-2 ring-primary/20 focus:border-primary/50 transition-all text-lg"
-                />
-                <button className="mt-4 md:mt-0 md:absolute md:right-2 md:top-2 md:bottom-2 bg-primary hover:bg-primary-dark text-white px-10 rounded-xl transition-all flex items-center justify-center gap-2 font-black uppercase text-xs tracking-widest shadow-2xl shadow-primary/40">
-                  Join <Send size={16} />
-                </button>
-              </form>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* 2. Main Footer Grid (Advanced Responsive) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-20 mb-20">
-          
-          {/* Brand & Socials */}
-          <div className="space-y-10">
-            <div className="space-y-6">
-              <h2 className="text-4xl font-black tracking-tighter text-white">
-                CAFE<span className="text-primary italic">NOVA</span>
-              </h2>
-              <p className="text-slate-400 leading-relaxed text-base">
-                Synthesizing avant-garde culinary techniques with digital sophistication. A sanctuary for the modern connoisseur.
-              </p>
-            </div>
-            
-            <div className="flex flex-wrap gap-4">
-              {socialLinks.map(({ Icon, href, color, label }) => (
-                <MagneticButton key={label}>
-                  <a
-                    href={href}
-                    className={cn(
-                      "w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 transition-all duration-300",
-                      color,
-                      "hover:bg-primary/10 hover:border-primary/30"
-                    )}
-                  >
-                    <Icon size={20} />
-                  </a>
-                </MagneticButton>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation with Animated Underlines */}
-          <div className="lg:pl-10">
-            <h4 className="text-white font-serif text-xl mb-10 flex items-center gap-3">
-              <Globe size={20} className="text-primary" /> Navigation
-            </h4>
-            <ul className="grid grid-cols-1 gap-6">
-              {navLinks.map((item) => (
-                <li key={item.name}>
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) => cn(
-                      "relative text-base tracking-wide transition-colors duration-300 py-1 inline-block",
-                      isActive ? "text-primary font-bold" : "text-slate-500 hover:text-white"
-                    )}
-                  >
-                    {({ isActive }) => (
-                      <>
-                        {item.name}
-                        {isActive && (
-                          <motion.div layoutId="underline" className="absolute left-0 bottom-0 w-full h-[2px] bg-primary rounded-full" />
-                        )}
-                      </>
-                    )}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Location & Contact (Interactive) */}
-          <div className="lg:col-span-2 space-y-10">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <h4 className="text-white font-serif text-xl flex items-center gap-3">
-                <MapPin size={20} className="text-primary" /> The Venue
-              </h4>
-              <div className="text-xs font-mono text-primary/60 bg-primary/5 px-4 py-2 rounded-lg border border-primary/10">
-                Lat: 28.6273° N | Long: 77.3725° E
-              </div>
-            </div>
-
-            <div className="relative h-64 w-full rounded-[2.5rem] overflow-hidden group shadow-inner">
-               <div className="absolute inset-0 bg-primary/20 mix-blend-color pointer-events-none z-10 opacity-40 group-hover:opacity-0 transition-opacity duration-700" />
-               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14008.11482718888!2d77.3703!3d28.6273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM3JzM4LjMiTiA3N8KwMjInMTMuMSJF!5e0!3m2!1sen!2sin!4v1634567890123!5m2!1sen!2sin"
-                className="w-full h-full grayscale hover:grayscale-0 contrast-125 transition-all duration-1000 scale-105 group-hover:scale-100"
-                loading="lazy"
-              />
-              <button className="absolute bottom-6 right-6 z-20 bg-white text-black p-4 rounded-full shadow-2xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
-                <ExternalLink size={20} />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* 3. The "Meta" Bar (Live Status & Metrics) */}
-        <div className="pt-12 border-t border-white/5 flex flex-col xl:flex-row justify-between items-center gap-10">
-          
-          {/* Live Status Engine */}
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            <div className="flex items-center gap-4 bg-slate-900/50 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/5 shadow-xl">
-              <div className="relative flex h-3 w-3">
-                <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative rounded-full h-3 w-3 bg-emerald-500"></span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] uppercase font-black tracking-[0.2em] text-white">Live Service</span>
-                <span className="text-[9px] text-slate-500 font-mono italic">
-                  Kitchen Active • Serving Sector 62, Noida
-                </span>
-              </div>
-            </div>
-
-            <div className="hidden md:flex items-center gap-3 text-slate-400 font-mono text-xs">
-              <Clock size={14} className="text-primary" />
-              {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-            </div>
-          </div>
-
-          {/* Core Links & Legal */}
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-            <div className="flex gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-slate-500">
-              <a href="/privacy" className="hover:text-primary transition-colors">Privacy</a>
-              <a href="/terms" className="hover:text-primary transition-colors">Terms</a>
-              <a href="/accessibility" className="hover:text-primary transition-colors">Accessibility</a>
-            </div>
-
-            <motion.button 
-              whileHover={{ y: -5 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center gap-3 px-6 py-3 bg-white/5 hover:bg-white/10 rounded-full border border-white/10 text-white transition-all group"
-            >
-              <span className="text-[10px] font-black uppercase tracking-widest">Back to Top</span>
-              <ArrowUp size={16} className="group-hover:-translate-y-1 transition-transform" />
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Final Encrypted Brand Mark */}
-        <div className="mt-16 text-center border-t border-white/[0.02] pt-8">
-           <div className="flex items-center justify-center gap-3 text-slate-700">
-              <ShieldCheck size={14} className="opacity-20" />
-              <p className="text-[9px] uppercase font-black tracking-[0.5em] opacity-30">
-                Secured Digital Environment <span className="text-primary mx-2">•</span> Design by Satyam
-              </p>
-           </div>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-/* --- Advanced Magnetic Interaction Component --- */
 const MagneticButton = ({ children }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -230,10 +32,8 @@ const MagneticButton = ({ children }) => {
   const mouseMove = (e) => {
     const { clientX, clientY, currentTarget } = e;
     const { width, height, left, top } = currentTarget.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-    x.set(clientX - centerX);
-    y.set(clientY - centerY);
+    x.set(clientX - (left + width / 2));
+    y.set(clientY - (top + height / 2));
   };
 
   const mouseLeave = () => {
@@ -246,13 +46,209 @@ const MagneticButton = ({ children }) => {
   const springY = useSpring(y, springConfig);
 
   return (
-    <motion.div
-      onMouseMove={mouseMove}
-      onMouseLeave={mouseLeave}
-      style={{ x: springX, y: springY }}
-    >
+    <motion.div onMouseMove={mouseMove} onMouseLeave={mouseLeave} style={{ x: springX, y: springY }}>
       {children}
     </motion.div>
+  );
+};
+
+const Footer = () => {
+  const [email, setEmail] = useState("");
+  const { status } = getRestaurantStatus();
+  const isOpen = status === "Open Now";
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email.trim()) {
+      toast.error("Enter an email address to subscribe.");
+      return;
+    }
+    toast.success("You're on the list — thank you!");
+    setEmail("");
+  };
+
+  return (
+    <footer className="relative overflow-hidden border-t border-border-subtle bg-bg-dark pb-8 pt-28">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-gold-primary/8 blur-[120px]" />
+        <div className="absolute left-0 top-1/2 h-64 w-64 rounded-full bg-gold-primary/5 blur-[100px]" />
+      </div>
+
+      <div className="container relative z-10 mx-auto px-6">
+        {/* Newsletter */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="group relative mb-24"
+        >
+          <div className="absolute -inset-1 rounded-[3rem] bg-gold-primary/20 opacity-40 blur-xl transition duration-1000 group-hover:opacity-70" />
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-border-subtle bg-surface p-8 backdrop-blur-3xl md:p-14">
+            <div className="flex flex-col items-center justify-between gap-10 lg:flex-row">
+              <div className="max-w-xl space-y-4 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 rounded-full border border-gold-primary/20 bg-gold-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-gold-primary">
+                  <Sparkles size={12} /> Stay in the Loop
+                </div>
+                <h3 className="font-serif text-3xl text-text-base md:text-5xl">
+                  Hear About <span className="italic text-gold-primary">New Menus First</span>
+                </h3>
+                <p className="text-lg text-text-muted">
+                  Seasonal menu launches and the occasional invite — nothing else.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubscribe} className="group/input relative w-full max-w-lg">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full rounded-2xl border border-border-subtle bg-bg-main/40 px-6 py-5 text-lg text-text-base outline-none transition-all focus:border-gold-primary/50 md:px-8 md:py-6"
+                />
+                <button
+                  type="submit"
+                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gold-primary px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition-all hover:bg-gold-hover md:absolute md:bottom-2 md:right-2 md:top-2 md:mt-0 md:w-auto"
+                >
+                  Join <Send size={16} />
+                </button>
+              </form>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Main grid */}
+        <div className="mb-20 grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-8">
+            <div className="space-y-5">
+              <h2 className="font-serif text-3xl text-text-base">
+                CAFE<span className="italic text-gold-primary">NOVA</span>
+              </h2>
+              <p className="leading-relaxed text-text-muted">
+                A neighbourhood kitchen in Sector 62, built around seasonal
+                ingredients and unhurried evenings.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {SOCIAL_LINKS.map(({ Icon, href, label }) => (
+                <MagneticButton key={label}>
+                  <a
+                    href={href}
+                    aria-label={label}
+                    className={cn(
+                      "flex h-11 w-11 items-center justify-center rounded-xl border border-border-subtle bg-surface text-text-muted transition-all duration-300",
+                      "hover:border-gold-primary/30 hover:bg-gold-primary/10 hover:text-gold-primary"
+                    )}
+                  >
+                    <Icon size={18} />
+                  </a>
+                </MagneticButton>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:pl-6">
+            <h4 className="mb-8 flex items-center gap-3 font-serif text-lg text-text-base">
+              <Globe size={18} className="text-gold-primary" /> Navigation
+            </h4>
+            <ul className="space-y-5">
+              {NAV_LINKS.map((item) => (
+                <li key={item.name}>
+                  <NavLink
+                    to={item.path}
+                    className={({ isActive }) =>
+                      cn(
+                        "inline-block py-0.5 text-sm tracking-wide transition-colors",
+                        isActive ? "font-bold text-gold-primary" : "text-text-muted hover:text-text-base"
+                      )
+                    }
+                  >
+                    {item.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-8 lg:col-span-2">
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+              <h4 className="flex items-center gap-3 font-serif text-lg text-text-base">
+                <MapPin size={18} className="text-gold-primary" /> The Venue
+              </h4>
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest border-gold-primary/25 text-gold-primary">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className={`absolute h-full w-full rounded-full ${isOpen ? "animate-ping bg-emerald-400" : "bg-red-400"} opacity-75`} />
+                  <span className={`relative h-1.5 w-1.5 rounded-full ${isOpen ? "bg-emerald-500" : "bg-red-500"}`} />
+                </span>
+                {status}
+              </span>
+            </div>
+
+            <div className="group relative h-60 w-full overflow-hidden rounded-[2rem] shadow-inner">
+              <div className="pointer-events-none absolute inset-0 z-10 bg-gold-primary/15 opacity-40 mix-blend-color transition-opacity duration-700 group-hover:opacity-0" />
+              <iframe
+                title="The Nova Table location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14008.11482718888!2d77.3703!3d28.6273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM3JzM4LjMiTiA3N8KwMjInMTMuMSJF!5e0!3m2!1sen!2sin!4v1634567890123!5m2!1sen!2sin"
+                className="h-full w-full scale-105 grayscale contrast-125 transition-all duration-1000 group-hover:scale-100 group-hover:grayscale-0"
+                loading="lazy"
+              />
+              <a
+                href="https://maps.google.com"
+                target="_blank"
+                rel="noreferrer"
+                className="absolute bottom-6 right-6 z-20 translate-y-4 rounded-full bg-gold-primary p-4 text-black opacity-0 shadow-2xl transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                aria-label="Open in Google Maps"
+              >
+                <ExternalLink size={20} />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Meta bar */}
+        <div className="flex flex-col items-center justify-between gap-8 border-t border-border-subtle pt-10 xl:flex-row">
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="flex items-center gap-3 rounded-2xl border border-border-subtle bg-surface px-5 py-2.5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className={`absolute h-full w-full animate-ping rounded-full opacity-75 ${isOpen ? "bg-emerald-400" : "bg-red-400"}`} />
+                <span className={`relative h-2.5 w-2.5 rounded-full ${isOpen ? "bg-emerald-500" : "bg-red-500"}`} />
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-base">
+                {isOpen ? "Open Now" : "Currently Closed"}
+              </span>
+            </div>
+            <div className="hidden items-center gap-2 text-xs text-text-muted md:flex">
+              <Clock size={14} className="text-gold-primary" />
+              10:00 AM – 11:00 PM Daily
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center gap-6 md:flex-row md:gap-10">
+            <div className="flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-text-muted">
+              <a href="/privacy" className="transition-colors hover:text-gold-primary">Privacy</a>
+              <a href="/terms" className="transition-colors hover:text-gold-primary">Terms</a>
+              <a href="/accessibility" className="transition-colors hover:text-gold-primary">Accessibility</a>
+            </div>
+
+            <motion.button
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.92 }}
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="group flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-5 py-2.5 text-text-base transition-all hover:border-gold-primary/30"
+            >
+              <span className="text-[10px] font-black uppercase tracking-widest">Top</span>
+              <ArrowUp size={15} className="transition-transform group-hover:-translate-y-0.5" />
+            </motion.button>
+          </div>
+        </div>
+
+        <div className="mt-14 border-t border-border-subtle/60 pt-8 text-center">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-text-muted/60">
+            © {new Date().getFullYear()} The Nova Table. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 };
 

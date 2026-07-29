@@ -6,8 +6,8 @@ import { fadeIn, staggerContainer } from "../utils/animations";
 const Contact = () => {
   const contactInfo = [
     { icon: <Phone size={20} />, title: "Call Us", detail: "+91 96209 96689", sub: "Mon-Fri, 9am-10pm" },
-    { icon: <Mail size={20} />, title: "Email Us", detail: "info@codeinnovativetechnologies.com", sub: "Response within 24hrs" },
-    { icon: <MapPin size={20} />, title: "Visit Us", detail: "Sector 62, Noida", sub: "Uttar Pradesh, India" },
+    { icon: <Mail size={20} />, title: "Email Us", detail: "hello@nova.in", sub: "Response within 24hrs" },
+    { icon: <MapPin size={20} />, title: "Visit Us", detail: "Sector 62, Bengaluru", sub: "Karnataka, India" },
     { icon: <Clock size={20} />, title: "Hours", detail: "10:00 AM - 11:00 PM", sub: "Open 7 Days a week" },
   ];
 
@@ -132,7 +132,7 @@ const Contact = () => {
             {[
               { q: "Do you offer valet parking?", a: "Yes, we provide complimentary valet parking for all our dinner guests." },
               { q: "Can I host a corporate event?", a: "Absolutely. We have a private lounge equipped for presentations and fine dining." },
-              { q: "Is there a dress code?", a: "We recommend smart casual to match the CafeNova atmosphere." }
+              { q: "Is there a dress code?", a: "We recommend smart casual to match The Nova Table atmosphere." }
             ].map((faq, i) => (
               <div key={i} className="space-y-3">
                 <h4 className="text-white font-bold flex items-center gap-2">

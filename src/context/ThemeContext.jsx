@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-const THEME_STORAGE_KEY = "cafenova-theme";
+const THEME_STORAGE_KEY = "The Nova Table-theme";
 
 const ThemeContext = createContext({
 	theme: "night",

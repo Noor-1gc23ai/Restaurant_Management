@@ -19,7 +19,7 @@ const Accessibility = () => {
           <div className="glass-card p-8">
             <Globe className="text-primary mb-4" size={32} />
             <h3 className="text-xl text-white font-serif mb-2">Physical Venue</h3>
-            <p className="text-slate-400 text-sm">Our Noida location features ramp access, braille menus upon request, and adjustable lighting zones for guests with sensory sensitivities.</p>
+            <p className="text-slate-400 text-sm">Our Bengaluru location features ramp access, braille menus upon request, and adjustable lighting zones for guests with sensory sensitivities.</p>
           </div>
         </div>
 
@@ -27,7 +27,7 @@ const Accessibility = () => {
           <h2 className="text-2xl text-white font-serif mb-4 flex items-center gap-3">
             <UserCheck className="text-primary" /> Continuous Improvement
           </h2>
-          <p>If you encounter any barriers on our platform, please reach out to our experience designers at <span className="text-primary">accessibility@cafenova.com</span>. We treat accessibility feedback as a priority bug.</p>
+          <p>If you encounter any barriers on our platform, please reach out to our experience designers at <span className="text-primary">accessibility@The Nova Table.com</span>. We treat accessibility feedback as a priority bug.</p>
         </section>
       </div>
     </main>

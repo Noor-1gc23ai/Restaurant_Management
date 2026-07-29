@@ -109,7 +109,7 @@ const Menu = () => {
                       <div className="absolute top-4 left-4 flex gap-2">
                         {item.tags.includes("Best Seller") && (
                           <span className="bg-primary/90 backdrop-blur-md text-[10px] text-white px-3 py-1 rounded-full font-bold flex items-center gap-1">
-                            <Star size={10} fill="white" /> POPULAR
+                            <Star size={10} fill="white" /> SIGNATURE
                           </span>
                         )}
                         {item.tags.includes("Spicy") && (

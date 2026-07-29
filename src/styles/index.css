@@ -246,3 +246,19 @@
     radial-gradient(at 80% 80%, rgba(79, 70, 229, 0.08), transparent 50%);
   pointer-events: none;
 }
+
+/* 💬 Testimonial swiper pagination — gold accent, matches luxury palette */
+.testimonial-swiper .swiper-pagination-bullet {
+  background: var(--color-gold-primary) !important;
+  opacity: 0.3;
+  width: 8px;
+  height: 8px;
+  transition: all 0.3s ease;
+}
+
+.testimonial-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  width: 24px;
+  border-radius: 4px;
+  background: var(--color-gold-primary) !important;
+}

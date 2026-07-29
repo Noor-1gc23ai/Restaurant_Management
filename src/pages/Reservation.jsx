@@ -8,111 +8,108 @@ const Reservation = () => {
   const y2 = useTransform(scrollY, [0, 500], [0, -150]);
 
   const contactInfo = [
-    { icon: <MapPin size={24} />, title: "Visit Us", detail: "Sector 62, Noida", sub: "Gautam Buddha Nagar, UP" },
+    { icon: <MapPin size={24} />, title: "Visit Us", detail: "Sector 62, Bengaluru", sub: "Gautam Buddha Nagar, UP" },
     { icon: <Phone size={24} />, title: "Call Us", detail: "+91 96209 96689", sub: "Mon - Sun, 10am - 11pm" },
-    { icon: <Mail size={24} />, title: "Email Us", detail: "info@codeinnovativetechnologies.com", sub: "Response within 24hrs" }
+    { icon: <Mail size={24} />, title: "Email Us", detail: "hello@nova.in", sub: "Response within 24hrs" },
   ];
 
   const policies = [
     { icon: <Clock size={20} />, text: "15-minute grace period for arrivals" },
     { icon: <ShieldCheck size={20} />, text: "Smart casual dress code required" },
-    { icon: <Star size={20} />, text: "VIP lounge available for 8+ guests" }
+    { icon: <Star size={20} />, text: "VIP lounge available for 8+ guests" },
   ];
 
   return (
-    <div className="pt-40 pb-24 bg-[#020617] relative overflow-hidden">
-      {/* Background Decorative Elements */}
-      <motion.div style={{ y: y1 }} className="absolute top-20 right-[-10%] w-[500px] h-[500px] bg-indigo-500/10 blur-[120px] rounded-full" />
-      <motion.div style={{ y: y2 }} className="absolute bottom-40 left-[-5%] w-[400px] h-[400px] bg-primary/10 blur-[100px] rounded-full" />
+    <div className="relative overflow-hidden bg-bg-dark pb-24 pt-40">
+      <motion.div style={{ y: y1 }} className="absolute right-[-10%] top-20 h-[500px] w-[500px] rounded-full bg-gold-primary/10 blur-[120px]" />
+      <motion.div style={{ y: y2 }} className="absolute bottom-40 left-[-5%] h-[400px] w-[400px] rounded-full bg-gold-primary/8 blur-[100px]" />
 
-      {/* 1. Hero Header Section */}
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div 
+      <div className="container relative z-10 mx-auto px-6">
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-24 space-y-6"
+          className="mb-24 space-y-6 text-center"
         >
-          <motion.span 
+          <motion.span
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
-            className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-[0.4em]"
+            className="inline-block rounded-full border border-gold-primary/25 bg-gold-primary/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.4em] text-gold-primary"
           >
             Exclusive Dining
           </motion.span>
-          <h1 className="text-6xl md:text-8xl font-serif text-white tracking-tight">
-            The <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-primary via-indigo-300 to-white/80">Experience</span>
+          <h1 className="font-serif text-6xl tracking-tight text-text-base md:text-8xl">
+            The <span className="italic text-gold-primary">Experience</span>
           </h1>
-          <p className="text-slate-400 max-w-xl mx-auto text-lg font-light leading-relaxed">
-            From intimate dinners to grand celebrations, every seat at CafeNova is a journey through flavor and elegance.
+          <p className="mx-auto max-w-xl text-lg font-light leading-relaxed text-text-muted">
+            From intimate dinners to grand celebrations, every seat at The Nova Table
+            is a journey through flavor and elegance.
           </p>
         </motion.div>
 
-        {/* 2. The Form (Main Action) */}
-        <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-b from-primary/20 to-transparent blur-3xl opacity-50 pointer-events-none" />
+        <div className="group relative">
+          <div className="pointer-events-none absolute -inset-1 rounded-[3rem] bg-gold-primary/15 opacity-40 blur-3xl" />
           <ReservationForm />
         </div>
 
-        {/* 3. Reservation Guidelines */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="mt-20 flex flex-wrap justify-center gap-8 border-y border-white/5 py-12"
+          viewport={{ once: true }}
+          className="mt-20 flex flex-wrap justify-center gap-8 border-y border-border-subtle py-12"
         >
           {policies.map((p, index) => (
-            <div key={index} className="flex items-center gap-3 text-slate-500 hover:text-primary transition-colors cursor-default">
-              <span className="p-2 rounded-lg bg-white/5">{p.icon}</span>
+            <div key={index} className="flex cursor-default items-center gap-3 text-text-muted transition-colors hover:text-gold-primary">
+              <span className="rounded-lg bg-surface p-2">{p.icon}</span>
               <span className="text-sm font-medium tracking-wide">{p.text}</span>
             </div>
           ))}
         </motion.div>
 
-        {/* 4. Glassmorphic Contact Cards */}
-        <div className="mt-32 grid md:grid-cols-3 gap-8">
+        <div className="mt-32 grid gap-8 md:grid-cols-3">
           {contactInfo.map((item, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ y: -10 }}
-              className="group relative p-10 bg-gradient-to-b from-white/[0.03] to-transparent border border-white/5 rounded-[2rem] overflow-hidden"
+              className="group relative overflow-hidden rounded-[2rem] border border-border-subtle bg-surface p-10"
             >
-              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-500" />
-              
+              <div className="absolute inset-0 bg-gold-primary/0 transition-colors duration-500 group-hover:bg-gold-primary/5" />
+
               <div className="relative z-10 flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gold-primary/10 text-gold-primary transition-all duration-500 group-hover:scale-110 group-hover:bg-gold-primary group-hover:text-black">
                   {item.icon}
                 </div>
-                <h4 className="text-white font-serif text-xl mb-3">{item.title}</h4>
-                <p className="text-white/80 font-medium mb-1">{item.detail}</p>
-                <p className="text-slate-500 text-xs uppercase tracking-widest">{item.sub}</p>
+                <h4 className="mb-3 font-serif text-xl text-text-base">{item.title}</h4>
+                <p className="mb-1 font-medium text-text-base/80">{item.detail}</p>
+                <p className="text-xs uppercase tracking-widest text-text-muted">{item.sub}</p>
               </div>
 
-              {/* Decorative Corner Glow */}
-              <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-primary/10 blur-2xl group-hover:bg-primary/30 transition-all" />
+              <div className="absolute -bottom-4 -right-4 h-20 w-20 rounded-full bg-gold-primary/10 blur-2xl transition-all group-hover:bg-gold-primary/25" />
             </motion.div>
           ))}
         </div>
 
-        {/* 5. Footer CTA - Operating Hours */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="mt-32 p-12 rounded-[3rem] bg-white/5 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8"
+          viewport={{ once: true }}
+          className="mt-32 flex flex-col items-center justify-between gap-8 rounded-[3rem] border border-border-subtle bg-surface p-12 md:flex-row"
         >
           <div className="space-y-2">
-            <h3 className="text-2xl font-serif text-white">Opening Hours</h3>
-            <p className="text-slate-400">Join us for lunch or dinner, seven days a week.</p>
+            <h3 className="font-serif text-2xl text-text-base">Opening Hours</h3>
+            <p className="text-text-muted">Join us for lunch or dinner, seven days a week.</p>
           </div>
           <div className="flex gap-12">
             <div className="text-center md:text-left">
-              <p className="text-primary font-bold text-xs uppercase tracking-tighter mb-1">Weekday</p>
-              <p className="text-white text-lg">11:00 — 22:00</p>
+              <p className="mb-1 text-xs font-bold uppercase tracking-tighter text-gold-primary">Weekday</p>
+              <p className="text-lg text-text-base">11:00 — 22:00</p>
             </div>
-            <div className="text-center md:text-left border-l border-white/10 pl-12">
-              <p className="text-primary font-bold text-xs uppercase tracking-tighter mb-1">Weekend</p>
-              <p className="text-white text-lg">10:00 — 23:30</p>
+            <div className="border-l border-border-subtle pl-12 text-center md:text-left">
+              <p className="mb-1 text-xs font-bold uppercase tracking-tighter text-gold-primary">Weekend</p>
+              <p className="text-lg text-text-base">10:00 — 23:30</p>
             </div>
           </div>
         </motion.div>

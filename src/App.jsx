@@ -58,7 +58,7 @@ const ThemeAwareToasters = () => {
 
 const PageLoader = () => (
   <div className="flex min-h-[60vh] items-center justify-center bg-bg-main px-6 text-center text-sm uppercase tracking-[0.3em] text-slate-500 transition-colors duration-500">
-    Loading CafeNova...
+    Loading The Nova Table...
   </div>
 );
 

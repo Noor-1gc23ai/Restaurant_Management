@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
-import { MessageCircle, ShoppingBag } from "lucide-react";
+import { createContext, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, MessageCircle, ShoppingBag, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Frame, FutureButton } from "../ui/FutureNavbar";
 import { getRestaurantStatus } from "../../utils/helpers";
 import { useCart } from "../../context/CartContext";
 import ThemeToggle from "./ThemeToggle";
@@ -11,148 +11,236 @@ export const MobileMenuContext = createContext({
   setShowMenu: () => {},
 });
 
+const NAV_LINKS = [
+  { name: "Home", path: "/" },
+  { name: "Menu", path: "/menu" },
+  { name: "Reservation", path: "/reservation" },
+  { name: "Order", path: "/order" },
+  { name: "Contact", path: "/contact" },
+];
+
+const WHATSAPP_NUMBER = "919620996689";
+const WHATSAPP_MESSAGE = "Hello The Nova Table! I have an enquiry regarding my visit.";
+
+const openWhatsApp = () => {
+  window.open(
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`,
+    "_blank"
+  );
+};
+
+const StatusBadge = ({ compact = false }) => {
+  const { status, color } = getRestaurantStatus();
+  const isOpen = status === "Open Now";
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] ${
+        isOpen
+          ? "border-emerald-500/25 text-emerald-500"
+          : "border-red-500/25 text-red-500"
+      } ${compact ? "" : color}`}
+    >
+      <span className="relative flex h-1.5 w-1.5">
+        <span
+          className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${
+            isOpen ? "bg-emerald-500" : "bg-red-500"
+          }`}
+        />
+        <span
+          className={`relative inline-flex h-1.5 w-1.5 rounded-full ${
+            isOpen ? "bg-emerald-500" : "bg-red-500"
+          }`}
+        />
+      </span>
+      {status}
+    </span>
+  );
+};
+
+const CartLink = ({ cartCount, className = "" }) => (
+  <NavLink
+    to="/cart"
+    aria-label={`View cart${cartCount > 0 ? `, ${cartCount} items` : ""}`}
+    className={`relative flex h-10 w-10 items-center justify-center rounded-full border border-border-subtle bg-surface text-text-base transition-colors hover:border-gold-primary/40 hover:text-gold-primary ${className}`}
+  >
+    <ShoppingBag size={17} />
+    {cartCount > 0 && (
+      <span className="absolute -right-1 -top-1 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-gold-primary px-1 text-[9px] font-black text-black">
+        {cartCount}
+      </span>
+    )}
+  </NavLink>
+);
+
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const { cartCount } = useCart();
-  const { status } = getRestaurantStatus();
-  
-  const primaryStroke = "#fbbf24"; 
-  const primaryFill = "rgba(251, 191, 36, 0.1)";
 
-  const openWhatsApp = () => {
-    const phoneNumber = "919620996689";
-    const msg = "Hello CafeNova! I have an enquiry regarding my visit.";
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-  };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Menu", path: "/menu" },
-    { name: "Reservation", path: "/reservation" },
-    { name: "Order", path: "/order" },
-    { name: "Contact", path: "/contact" },
-  ];
+  // Lock body scroll while the mobile menu is open.
+  useEffect(() => {
+    document.body.style.overflow = showMenu ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showMenu]);
 
   return (
     <MobileMenuContext.Provider value={{ showMenu, setShowMenu }}>
-      <nav className="fixed w-full top-0 inset-x-0 z-50 h-20">
-        <div className="absolute right-4 top-4 z-50 flex items-center gap-2 lg:hidden">
-          <ThemeToggle compact />
+      <nav
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "border-b border-border-subtle bg-bg-main/85 backdrop-blur-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <div className="container mx-auto flex h-20 items-center justify-between px-6">
+          {/* Logo */}
           <NavLink
-            to="/cart"
-            className="flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/80 px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white backdrop-blur-md shadow-xl"
+            to="/"
+            className="font-serif text-xl font-black tracking-tight text-text-base"
+            onClick={() => setShowMenu(false)}
           >
-            <ShoppingBag size={14} className="text-yellow-500" />
-            Cart
-            {cartCount > 0 && (
-              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[9px] font-black text-white">
-                {cartCount}
-              </span>
-            )}
+            CAFE<span className="italic text-gold-primary">NOVA</span>
           </NavLink>
-        </div>
 
-        <div className="flex h-full relative w-full items-center">
-          
-          {/* Left Frame (Decorative) */}
-          <div className="size-full relative -mr-[11px] hidden lg:block opacity-30">
-            <Frame
-              paths={[
-                {
-                  show: true,
-                  style: { strokeWidth: "1", stroke: primaryStroke, fill: "rgba(251,191,36,0.05)" },
-                  path: [["M","0","0"],["L","100% - 6","0"],["L","100% - 11","100% - 64"],["L","100% + 0","0% + 29"],["L","0","11"],["L","0","0"]]
+          {/* Desktop nav links */}
+          <div className="hidden items-center gap-8 lg:flex">
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                className={({ isActive }) =>
+                  `relative py-2 text-[11px] font-bold uppercase tracking-[0.2em] transition-colors ${
+                    isActive
+                      ? "text-gold-primary"
+                      : "text-text-muted hover:text-text-base"
+                  }`
                 }
-              ]}
-            />
-          </div>
-
-          {/* Center Frame (Nav Links) */}
-          <div className="flex-none h-full px-12 relative w-full lg:w-auto lg:min-w-[520px] xl:min-w-[580px]">
-            <Frame
-              enableBackdropBlur
-              className="drop-shadow-[0_0_10px_rgba(251,191,36,0.1)]"
-              paths={[
-                {
-                  show: true,
-                  style: { strokeWidth: "1", stroke: primaryStroke, fill: primaryFill },
-                  path: [["M","6","0"],["L","100% - 6.5","0"],["L","100% + 0","0% + 9"],["L","100% - 28","100% - 15"],["L","162","100% - 15"],["L","164","100% - 30"],["L","153","100% - 15"],["L","27","100% - 15"],["L","0","0% + 8"],["L","6","0"]]
-                }
-              ]}
-            />
-            
-            <div className="flex items-center mt-3 relative z-20">
-              <NavLink to="/" className="me-10 font-serif font-black text-xl tracking-tighter text-white">
-                CAFE<span className="text-yellow-500 italic">NOVA</span>
-              </NavLink>
-
-              <div className="hidden lg:flex gap-6 font-bold text-[10px] uppercase tracking-[0.2em]">
-                {navLinks.map((link) => (
-                  <NavLink 
-                    key={link.path} 
-                    to={link.path} 
-                    className={({ isActive }) => isActive ? "text-yellow-500" : "text-white/50 hover:text-white transition-colors"}
-                  >
+              >
+                {({ isActive }) => (
+                  <>
                     {link.name}
-                  </NavLink>
-                ))}
-              </div>
-
-              <div className="ms-6 hidden xl:block">
-                <span className="text-[8px] font-black px-2 py-0.5 rounded border border-yellow-500/20 text-yellow-500 animate-pulse uppercase">
-                  {status}
-                </span>
-              </div>
-            </div>
+                    {isActive && (
+                      <motion.span
+                        layoutId="navUnderline"
+                        className="absolute -bottom-0.5 left-0 right-0 h-[1.5px] bg-gold-primary"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </>
+                )}
+              </NavLink>
+            ))}
           </div>
 
-          {/* Right Frame (Enquiry Button) */}
-          <div className="w-full relative -ml-[25px] lg:flex justify-end pe-10 hidden">
-            <Frame
-              enableBackdropBlur
-              paths={[
-                {
-                  show: true,
-                  style: { strokeWidth: "1", stroke: primaryStroke, fill: "rgba(251,191,36,0.05)" },
-                  path: [["M","19","0"],["L","100% - 5","0"],["L","100% + 0","0% + 7"],["L","100% - 36","100% - 20"],["L","0","100% - 20"],["L","25","8.9"],["L","19","1"]]
-                }
-              ]}
-            />
-            <div className="flex items-center -mt-4 relative z-20">
-              <div className="mr-3">
-                <ThemeToggle />
-              </div>
-              <FutureButton
-                onClick={() => navigate("/cart")}
-                shape="flat"
-                className="font-black px-6 py-2 text-[10px] uppercase tracking-[0.2em] hover:brightness-125 mr-3"
-              >
-                <div className="relative flex items-center gap-2">
-                  <ShoppingBag size={14} className="text-yellow-500" />
-                  Cart
-                  {cartCount > 0 && (
-                    <span className="absolute -right-5 -top-3 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[9px] font-black text-white">
-                      {cartCount}
-                    </span>
-                  )}
-                </div>
-              </FutureButton>
+          {/* Right cluster */}
+          <div className="flex items-center gap-3">
+            <span className="hidden xl:inline-flex">
+              <StatusBadge />
+            </span>
 
-              <FutureButton
-                onClick={openWhatsApp}
-                shape="flat"
-                className="font-black px-6 py-2 text-[10px] uppercase tracking-[0.2em] hover:brightness-125"
+            <button
+              type="button"
+              onClick={openWhatsApp}
+              aria-label="Enquire on WhatsApp"
+              className="hidden h-10 w-10 items-center justify-center rounded-full border border-border-subtle bg-surface text-text-base transition-colors hover:border-gold-primary/40 hover:text-gold-primary sm:flex"
+            >
+              <MessageCircle size={16} />
+            </button>
+
+            <span className="hidden sm:block">
+              <ThemeToggle compact />
+            </span>
+
+            <CartLink cartCount={cartCount} className="hidden sm:flex" />
+
+            <button
+              type="button"
+              onClick={() => navigate("/reservation")}
+              className="hidden rounded-full bg-gold-primary px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] text-black transition-transform hover:scale-[1.03] active:scale-95 lg:inline-flex"
+            >
+              Reserve a Table
+            </button>
+
+            {/* Mobile controls */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <ThemeToggle compact />
+              <CartLink cartCount={cartCount} />
+              <button
+                type="button"
+                onClick={() => setShowMenu((prev) => !prev)}
+                aria-label={showMenu ? "Close menu" : "Open menu"}
+                aria-expanded={showMenu}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-border-subtle bg-surface text-text-base"
               >
-                <div className="flex items-center gap-2">
-                  <MessageCircle size={14} className="text-yellow-500" />
-                  Enquiry
-                </div>
-              </FutureButton>
+                {showMenu ? <X size={18} /> : <Menu size={18} />}
+              </button>
             </div>
           </div>
         </div>
       </nav>
+
+      {/* Mobile menu panel */}
+      <AnimatePresence>
+        {showMenu && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 bg-bg-main/98 backdrop-blur-2xl lg:hidden"
+          >
+            <div className="flex h-full flex-col items-center justify-center gap-8 px-6">
+              {NAV_LINKS.map((link, index) => (
+                <motion.div
+                  key={link.path}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 * index, duration: 0.35 }}
+                >
+                  <NavLink
+                    to={link.path}
+                    onClick={() => setShowMenu(false)}
+                    className={({ isActive }) =>
+                      `font-serif text-3xl tracking-tight ${
+                        isActive ? "text-gold-primary" : "text-text-base"
+                      }`
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                </motion.div>
+              ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 * NAV_LINKS.length, duration: 0.35 }}
+                className="mt-4 flex items-center gap-4"
+              >
+                <StatusBadge compact />
+                <button
+                  type="button"
+                  onClick={openWhatsApp}
+                  className="flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-4 py-2 text-xs font-bold uppercase tracking-widest text-text-base"
+                >
+                  <MessageCircle size={14} /> WhatsApp
+                </button>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </MobileMenuContext.Provider>
   );
 };
